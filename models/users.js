@@ -13,9 +13,9 @@ export async function findById(id) {
     try {
         const [result = null] = (await DbMysql.query(
             `SELECT *
-       FROM users
-       WHERE id = ?
-       limit 1;`,
+             FROM users
+             WHERE id = ?
+                 limit 1;`,
             [id]
         )) || [];
 
@@ -30,15 +30,15 @@ export async function getUsersList(page = 1, limit = 20) {
     try {
         const [[{ count }]] = await DbMysql.query(
             `SELECT count(*) as count
-       FROM users;`,
+             FROM users;`,
         );
 
         const offset = Math.ceil((page - 1) * limit);
 
         const [result] = await DbMysql.query(
             `SELECT id, name, age, email
-       FROM users
-       limit ? offset ?`,
+             FROM users
+                      limit ? offset ?`,
             [limit, offset]
         );
 
@@ -53,9 +53,9 @@ export async function findByEmail(email) {
     try {
         const [result = null] = (await DbMysql.query(
             `SELECT *
-       FROM users
-       WHERE email = ?
-       limit 1;`,
+             FROM users
+             WHERE email = ?
+                 limit 1;`,
             [email]
         )) || [];
 
@@ -70,9 +70,9 @@ export async function checkEmailUnique(email) {
     try {
         const [result = null] = (await DbMysql.query(
             `SELECT *
-       FROM users
-       WHERE email = ?
-       limit 1;`,
+             FROM users
+             WHERE email = ?
+                 limit 1;`,
             [email]
         )) || [];
 
@@ -87,7 +87,7 @@ export async function create({ name, age, email, password }) {
     try {
         const result = await DbMysql.query(
             `insert into users (name, age, email, password)
-       values (?, ?, ?, ?);`,
+             values (?, ?, ?, ?);`,
             [name, age, email, password]
         );
 
@@ -104,11 +104,11 @@ export async function update(id, { name, age }, returnData = false) {
     try {
         const result = await DbMysql.query(
             `
-          update users
-          set name = ?,
-              age  = ?
-          WHERE id = ?;
-      `,
+                update users
+                set name = ?,
+                    age  = ?
+                WHERE id = ?;
+            `,
             [name, age, id]
         );
 
